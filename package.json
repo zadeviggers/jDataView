@@ -1,6 +1,6 @@
 {
-  "name": "jdataview",
-  "version": "3.0.0",
+  "name": "z-jdataview-temp-publish",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "precommit": "lint-staged",
