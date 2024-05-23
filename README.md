@@ -1,54 +1,56 @@
-# jDataView - JS Binary data made easy
+# jDataView - easy binary data in JavaScript
 
 [![Tests Status](https://github.com/jdataview/jdataview/actions/workflows/run-tests.yml/badge.svg)](https://github.com/jDataView/jDataView/actions/workflows/run-tests.yml)
 
 [npm](https://www.npmjs.com/package/jdataview) | [GitHub](https://github.com/jDataView/jDataView/) | [Docs](https://github.com/jDataView/jDataView/wiki) | [Website](https://jdataview.github.io/jDataView/) | [Changelog](https://github.com/jDataView/jDataView/blob/master/CHANGELOG.md)
 
-jDataView is a drop-in replacement for JavaScript's built-in `DataView` class,  adding methods for writing strings, individual bits, arbitrary-sized integers, and more.
+jDataView is a drop-in replacement for JavaScript's built-in [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView) class, adding methods for writing strings, individual bits, arbitrary-sized integers, and more.
 
-## Usage
-
-```bash
-npm i jdataview
+## Installation
+jDataView is published on [npm](https://www.npmjs.com/package/jdataview), so you may install it like so:
+```sh
+npm add jdataview
 ```
 > Note that TypeScript definitions are now included in the `jdataview` package automatically.
-```ts
+
+## Usage
+`jDataView` functions as a drop-in replacement for the native `DataView` API, with extra features on top:
+```js
 import { jDataView } from "jdataview";
 
-// jDataView maintains an internal byte-cursor, which lets you use the API in a much more ergonomic way
+// Construct jDataView the same way you would construct a regular DataView
+// You may also pass a string or array of numbers, and jDataView will parse
+// that into an ArrayBuffer automatically
 const view = new jDataView(new ArrayBuffer(100));
+// You can also use `const view = jDataView.from(0x00, 0x01, ...etc)`
+
+// The regular methods all work as before
+view.setInt16(0, 256, true);
 
 const msg = "Hello there";
 
-// jDataView's writeXXX methods are the same as the setXXX methods,
+// jDataView maintains an internal byte-cursor, which lets you use
+// the API in a much more ergonomic way. For example, jDataView's
+// writeXXX methods are much the same as the setXXX methods,
 // but the byte-cursor position is used instead of passing an offset
 view.writeString(msg);
 view.writeBigInt64(2011n);
 
-// seek(pos) changes the byte-position of jDataView's internal 'cursor' 
+// seek(pos) changes the byte position of jDataView's internal 'cursor.' 
 view.seek(0);
 
-// You need to specify the byte-length for strings (which for ascii text is just the length)
+// You need to specify the byte length for strings (which for ASCII text is just the length)
 console.log(view.getString(msg.length)); // > Hello there
 
 // Passing an offset is optional - if you don't, jDataView uses the byte-cursor position
-// jDataView also has methods that let you use bigger Number's than JavaScript supports - you'll just lose precision
+// jDataView also has methods that let you use bigger Numbers than JavaScript supports - you'll just lose precision
 console.log(view.getInt64()); // > 2011
 ```
+
 More examples are in [the docs](https://github.com/jDataView/jDataView/wiki). Here's a good [starting point](https://github.com/jDataView/jDataView/wiki/Example).
 
 ## [Documentation](https://github.com/jDataView/jDataView/wiki)
 jDataView extends the built-in JavaScript `DataView` class, so all of [it's documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView) is applicable here. 
-
-### API Reference
-
-  * [jDataView constructor](https://github.com/jDataView/jDataView/wiki/jDataView-constructor)
-  * jDataView Extensions
-    * [Operation control](https://github.com/jDataView/jDataView/wiki/Operation-control)
-    * [writeXXX methods](https://github.com/jDataView/jDataView/wiki/writeXXX-methods)
-    * [Strings and Blobs](https://github.com/jDataView/jDataView/wiki/Strings-and-Blobs)
-    * [Bitfields](https://github.com/jDataView/jDataView/wiki/Bitfields)
-    * [Internal utilities](https://github.com/jDataView/jDataView/wiki/Internal-utilities)
 
 ## Demos
 

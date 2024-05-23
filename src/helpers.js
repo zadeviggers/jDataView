@@ -8,7 +8,7 @@ export function getCharCodes(string) {
 	return codes;
 }
 
-// mostly internal function for wrapping any supported input (String or Array-like) to best suitable buffer format
+// Internal function for wrapping any supported input (String or Array-like) to an ArrayBuffer
 export function wrapBuffer(buffer) {
 	switch (typeof buffer) {
 		case "number": {
